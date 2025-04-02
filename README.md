@@ -5,6 +5,7 @@ A simple wrapper around the `z` shell program.
 Confirmed to work with the following implementations:
 
 - [`z.lua`](https://github.com/skywind3000/z.lua)
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide)
 
 Open an issue/PR if a `z` implementation works/doesn't work 🙂.
 
@@ -22,12 +23,27 @@ Open an issue/PR if a `z` implementation works/doesn't work 🙂.
 
 ## Configuration
 
-The default configuration is provided below:
+The default configuration is provided below (works with `z.lua`):
 
 ```lua
 require("z").setup({
-  z_cmd = "z",
-  use_dir_changed = true
+    z_cmd = { "z", "-e" },
+    z_comp_cmd = { "z", "--complete" },
+    z_dir_changed_cmd = { "z", "--add" },
+})
+```
+
+A configuration for `zoxide`:
+
+```lua
+require("z").setup({
+    z_cmd = function()
+        return { "zoxide", "query", "--exclude", vim.fn.getcwd() }
+    end,
+    z_comp_cmd = function()
+        return { "zoxide", "query", "--list", "--exclude", vim.fn.getcwd() }
+    end,
+    z_dir_changed_cmd = { "zoxide", "add" }
 })
 ```
 
