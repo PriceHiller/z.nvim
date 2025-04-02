@@ -115,6 +115,8 @@ M.setup = function(user_config)
                         )
                     end
                 end)
+                -- On a change of directory, wipe out the cache
+                cached_z_listing = {}
             end,
         })
     end
